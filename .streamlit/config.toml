@@ -4,7 +4,7 @@
 # Increase the maximum upload size (per file) in megabytes (default is 200)
 # Example: allow uploads up to 1000 MB (1 GB)
 maxUploadSize = 1000
-port = 8502
+#port = 8502
 
 
 #[theme]
