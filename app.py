@@ -90,6 +90,20 @@ with st.form(key='transformation'):
         
         st.image(combined_trans(trans))
 
+# with st.container():
+
+#     trans = st.pills("Select transformations",options=["Translation","Rotation","Shearing","Cropping","Scaling"],selection_mode="multi")
+
+#     def combined_trans(selected):
+#         trans_img = img
+#         for i in selected:
+#             trans_img = eval(f"{i}(trans_img)")
+#         return trans_img
+
+        
+#     st.image(combined_trans(trans))
+
+
 if len(trans)>0:
 
     with st.popover("Click to view selected transformations"):
@@ -98,9 +112,12 @@ if len(trans)>0:
             st.write(n,i)
         st.write("(Press 'Preview' to confirm change in selection)")
 
+    data = 0
     with st.form(key='download'):
         img_count = st.slider("Select number of images to download",1,50)
-        st.form_submit_button("Download")
+        confirm = st.form_submit_button("Confirm")
 
+if confirm:
+      st.download_button("Download",data,"data.csv")
       
 
