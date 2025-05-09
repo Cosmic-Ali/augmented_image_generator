@@ -1,0 +1,14 @@
+# .streamlit/config.toml
+
+[server]
+# Increase the maximum upload size (per file) in megabytes (default is 200)
+# Example: allow uploads up to 1000 MB (1 GB)
+maxUploadSize = 1000
+
+#[theme]
+# (optional) your theme settings
+#primaryColor = "#1E88E5"
+#backgroundColor = "#FFF9E1"
+#secondaryBackgroundColor = "#F0F0F0"
+#textColor = "#262730"
+#font = "sans serif"

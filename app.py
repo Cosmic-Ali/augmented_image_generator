@@ -69,9 +69,7 @@ def Cropping(img,n=5):
 
 img = cv2.imread("/Users/ali/Desktop/data_science/ML/computer_vision/Apple-logo-1977.jpg")
 
-# cv2.imshow("img",rotation(img))
-# cv2.waitKey(1000)
-# cv2.destroyAllWindows()
+st.file_uploader("Upload image",type="zip",accept_multiple_files=True)
 
 
 with st.form(key='transformation'):
@@ -117,7 +115,7 @@ if len(trans)>0:
         img_count = st.slider("Select number of images to download",1,50)
         confirm = st.form_submit_button("Confirm")
 
-if confirm:
-      st.download_button("Download",data,"data.csv")
+    if confirm:
+        st.download_button("Download",data,"data.csv")
       
 
