@@ -1,3 +1,14 @@
+---
+title: Augmented Img Generator
+emoji: 💻
+colorFrom: indigo
+colorTo: blue
+sdk: streamlit
+sdk_version: 1.45.0
+app_file: app.py
+pinned: false
+short_description: Generates synthetic image data by augmenting given images
+---
 
 # Augmented Image Generator
 
@@ -94,14 +105,3 @@ This tool uses [Streamlit](https://streamlit.io/) to power its interactive UI fo
 
 ```
 ```
----
-title: Augmented Img Generator
-emoji: 💻
-colorFrom: indigo
-colorTo: blue
-sdk: streamlit
-sdk_version: 1.45.0
-app_file: app.py
-pinned: false
-short_description: Generates synthetic image data by augmenting given images
----
