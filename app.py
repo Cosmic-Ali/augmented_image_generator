@@ -6,12 +6,13 @@ import cv2
 #Python modules
 import warnings
 warnings.filterwarnings('ignore')
+import os
 from zipfile import ZipFile
 import zlib     # for compression="zipfile.ZIP_DEFLATED"
 import shutil
 import gc       # for garbage collection
 gc.enable()       
-import os
+
 
 
 st.title("Augmented Image Generator")
@@ -117,8 +118,14 @@ with st.form(key='transformation'):
     trans_types = st.pills("**Select transformations**",options=["Translation","Rotation","Shearing","Cropping","Scaling"],selection_mode="multi")
 
     preview = st.form_submit_button("Preview")
-    if preview:# convert to rgb because streamlit supports rgb
-        st.image(combined_trans(trans_types,images[0]))  #files[0] is the preview image
+    if preview:
+        c1,c2 = st.columns(2)
+        for i in range(2):
+            with c1:
+                st.image(combined_trans(trans_types,cv2.cvtColor(images[0],cv2.COLOR_BGR2RGB)))  #converting image defualt bgr to rgb because st displays rgb
+            with c2:
+                st.image(combined_trans(trans_types,cv2.cvtColor(images[0],cv2.COLOR_BGR2RGB)))  #converting image defualt bgr to rgb because st displays rgb
+        st.info("Previewing 4 transformed images with the selected combination")
 
 # with st.container():
 #     trans = st.pills("Select transformations",options=["Translation","Rotation","Shearing","Cropping","Scaling"],selection_mode="multi")
@@ -164,6 +171,7 @@ if len(trans_types)>0:
         # Clearing the created folder and files from data directory         
         os.remove("data/augmented_images.zip")
         shutil.rmtree("data/augmented_images")
+
 
                 # os.rmdir("data/augmented_images.zip")      #Deleting the files from dir after user download completes
 
