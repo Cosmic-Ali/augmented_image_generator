@@ -78,6 +78,14 @@ def Cropping(img,n=5):
         return cr_img
         # save_image_and_show(img_crop)
 
+def Flip_h(img):
+    fliphor_img = cv2.flip(img, 1) 
+    return fliphor_img
+
+def Flip_v(img):
+    flipver_img = cv2.flip(img, 0)
+    return flipver_img
+
 
 # Function for combining and applying transformations on a single image
 def combined_trans(trans_types,img):
@@ -115,7 +123,7 @@ del files
 
 with st.form(key='transformation'):
 
-    trans_types = st.pills("**Select transformations**",options=["Translation","Rotation","Shearing","Cropping","Scaling"],selection_mode="multi")
+    trans_types = st.pills("**Select transformations**",options=["Translation","Rotation","Shearing","Cropping","Scaling","Flip_h","Flip_v"],selection_mode="multi")
 
     preview = st.form_submit_button("Preview")
     if preview:
