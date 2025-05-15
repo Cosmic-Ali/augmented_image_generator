@@ -25,7 +25,7 @@ def Translation(img,n=5):
         tx=np.random.randint(2,45)
         ty=np.random.randint(1,40)
         tm=np.array([[1,0,tx],[0,1,ty]],dtype=np.float32)
-        tr_img=cv2.warpAffine(img,tm,dsize=(img.shape[1],img.shape[0]),borderMode=cv2.BORDER_REFLECT)
+        tr_img=cv2.warpAffine(img,tm,dsize=(img.shape[1],img.shape[0]))
         return tr_img
         # save_image_and_show(trans_img)
 
@@ -63,7 +63,7 @@ def Shearing(img,n=5):
         sy=np.round(np.random.uniform(1,1.2),2)
         ty=np.random.randint(1,20)
         shm=np.array([[sx,shx,tx],[shy,sy,ty]],dtype=np.float32)
-        sh_img=cv2.warpAffine(img,shm,(img.shape[1],img.shape[0]),borderMode=cv2.BORDER_REFLECT)
+        sh_img=cv2.warpAffine(img,shm,(img.shape[1],img.shape[0]))
         return sh_img
         # save_image_and_show(img_shear)
 
@@ -98,7 +98,7 @@ def combined_trans(trans_types,img):
 # Taking Files from the User
 # img = cv2.imread("/Users/ali/Desktop/data_science/ML/computer_vision/Apple-logo-1977.jpg")    #example image
 files = st.file_uploader("Upload image",type=["jpg","png","zip"],accept_multiple_files=True)    
-# Future Imporvements: Add functionality to accept compressed zip files and then extract them.
+# Future Improvements: Add functionality to accept compressed zip files and then extract them.
 
 # Reading/Converting files to cv2.image()/array 
 images = []
@@ -155,32 +155,39 @@ if len(trans_types)>0:
     
     with st.form(key='download'):
         img_count = st.slider("Select number of images to download",1,50)
-        # compress_level = st.number_input("Enter compression level",0,8)
-
         confirm = st.form_submit_button("Confirm")
         
     if confirm:
 
         if not os.path.exists("data/augmented_images"):
             os.mkdir("data/augmented_images")
-        # Creating zip file, and writing images files to it one by one
-        # with ZipFile("data/augmented_images.zip","w",compression=8, compresslevel=compress_level) as zip:   #compression=8 means zipfile.ZIP_DEFLATED 
+        # Creating a folder, and writing images files to it one by one
+
         for i,img in enumerate(images):
             for n in range(img_count):
-                cv2.imwrite(f"data/augmented_images/{i}{n}.jpg",combined_trans(trans_types,img))
+                try:
+                    cv2.imwrite(f"data/augmented_images/{i}{n}.jpg",combined_trans(trans_types,img))
+                except AttributeError:  # instead of exception handling, write a condition using regex to extract only the acceptable files
+                    continue
 
+        # Zipping/archiving the augmented_images folder
         shutil.make_archive("data/augmented_images","zip",base_dir="data/augmented_images")
 
         with open("data/augmented_images.zip",'rb') as f:
             download_button = st.download_button("Download images",f,file_name="augmented_images.zip")
 
-            # if download_button:     
-                # if os.path.exists("data/augmented_images.zip") and os.path.exists("data/augmented_images"):
-        # Clearing the created folder and files from data directory         
+  
         os.remove("data/augmented_images.zip")
         shutil.rmtree("data/augmented_images")
+        #Deleting the files from dir after user download completes
 
 
-                # os.rmdir("data/augmented_images.zip")      #Deleting the files from dir after user download completes
 
 
+# improvements and bug fixes:
+
+# 1. Display the total number of images that are going to be downloaded. 
+#    And change the download slider text to "Select the number of augmented images per given image"
+# 2. Instead of exception handling, write a condition using regex to extract only the acceptable files
+# 3. Write a st.spinner to display loading animation when the images are loading
+# 4. Fix the cropping function 
